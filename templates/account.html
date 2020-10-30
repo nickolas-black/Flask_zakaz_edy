@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <main class="container">
+    <section class="row">
+      <div class="col-12 col-lg-8">
+        <h1 class="h3 my-5">Личный кабинет. Заказы</h1>
+
+        <h4 class="h4 my-5"> {% if info.orders|length != 0 %} Всего заказов: {{ info.orders|length }} {% else %} Упс... у Вас еще нет заказов, <a href="{{ url_for('render_index') }}"> скорее исправляйте это! </a> {% endif %} </h4>
+        {% for order in info.orders %}
+        <div class="mt-4 card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-7 col-lg-9">
+                  <span class="h5 font-weight-bold">{{ order.date.strftime("%d.%m.%Y") }}</span>
+                  <span class="h5">- {{ order.order_sum }} P</span>
+                </div>
+              </div>
+            </li>
+
+            <div class="card-body">
+            {% for meal in order.meals %}
+              <div class="row">
+                <p class="col-4 text-muted">{{ meal.title }} </p>
+                <p class="col-2 text-muted"> 1</p>
+                <p class="col-6 text-muted"> {{ meal.price }} руб. </p>
+             </div>
+              {% endfor %}
+            </div>
+          </ul>
+      </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% endblock %}
